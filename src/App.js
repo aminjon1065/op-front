@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import {Container} from "react-bootstrap";
+
+import SideBar from "./components/sidebar/SideBar";
+import Header from "./components/header/Header";
+import Content from "./pages/Content";
+import {BrowserRouter as Router} from "react-router-dom";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    return (
+        <Router>
+            <div className="bg-milk d-flex d-flex" id="wrapper">
+                <SideBar/>
+                <div id="page-content-wrapper" className="sticky-top">
+                    <Header/>
+                    <Container fluid>
+                        <Content/>
+                    </Container>
+                </div>
+            </div>
+        </Router>
+    );
 }
 
 export default App;

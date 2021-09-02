@@ -1,0 +1,8 @@
+$theme-colors: (
+        "primary":$blue-400,
+        "secondary":$secondary,
+        "laravel":tomato,
+        "danger":teal,
+        "milk":#eeeeee
+);
+@import "~bootstrap/scss/bootstrap";
