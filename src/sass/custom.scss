@@ -3,7 +3,17 @@ $theme-colors: (
         "secondary":$gray-300,
         "laravel":tomato,
         "teal":teal,
-        "milk":#eeeeee,
-        "sidebar":#477EFF
+        "milk":red,
+        "sidebar":#1e282c
 );
+$sidebar: #1e282c;
+$milk: #eeeeee;
+.bg-milk {
+  background-color: $milk;
+}
+
+.bg-sidebar {
+  background-color: $sidebar;
+}
+
 @import "~bootstrap/scss/bootstrap";

@@ -38,15 +38,15 @@ const Header = () => {
                     >
                         <i className={`fas ${menuToggle ? 'fa-bars ' : 'fa-ellipsis-v'}`}></i>
                     </button>
-                    {/*<Navbar.Brand*/}
-                    {/*    as={Link}*/}
-                    {/*    to="/"*/}
-                    {/*>*/}
-                    {/*    <Image*/}
-                    {/*        width="80px"*/}
-                    {/*        src={logo}*/}
-                    {/*    />*/}
-                    {/*</Navbar.Brand>*/}
+                    <Navbar.Brand
+                        as={Link}
+                        to="/"
+                    >
+                        <Image
+                            width="80px"
+                            src={logo}
+                        />
+                    </Navbar.Brand>
                     <Navbar.Toggle
                         aria-controls="basic-navbar-nav"
                     />
@@ -56,6 +56,7 @@ const Header = () => {
                     >
                         <Nav className="me-auto">
                             <Nav.Link onClick={closeNav} as={Link} to="/">Home</Nav.Link>
+                            <Nav.Link onClick={closeNav} as={Link} to="/login">Login</Nav.Link>
                             <Nav.Link onClick={closeNav} as={Link} to="/login">Login</Nav.Link>
                             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                                 <NavDropdown.Item onClick={closeNav} as={Link} to="/">Home</NavDropdown.Item>
