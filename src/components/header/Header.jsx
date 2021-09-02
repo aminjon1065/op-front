@@ -1,41 +1,83 @@
 import React, {useState} from 'react';
 import {Link} from "react-router-dom";
+import {Container, Image, Nav, Navbar, NavDropdown} from "react-bootstrap";
+import logo from './../../logo.svg';
 
 const Header = () => {
     const [menuToggle, setMenuToggle] = useState(true);
+    const [navExpanded, setNavExpanded] = useState(false);
+
+
+    const setExpanded = (expanded) => {
+        setNavExpanded(expanded);
+    };
+    const closeNav = () => {
+        setNavExpanded(false);
+    };
+
     function toggleMenu(event) {
         event.preventDefault()
         setMenuToggle(prevState => !menuToggle);
         document.body.classList.toggle('sb-sidenav-toggled')
     }
+
     return (
         <>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom sticky-top">
-                <div className="container-fluid">
-                    <button className="btn" id="sidebarToggle" onClick={toggleMenu}><i
-                        className={`fas ${menuToggle ? 'fa-bars ' : 'fa-ellipsis-v'}`}></i></button>
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation"><span
-                        className="navbar-toggler-icon"></span></button>
-                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav ms-auto mt-2 mt-lg-0">
-                            <li className="nav-item active"><Link className="nav-link" to="/">Home</Link></li>
-                            <li className="nav-item"><Link className="nav-link" to="/login">Login</Link></li>
-                            <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                                   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                                <div className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a className="dropdown-item" href="#!">Action</a>
-                                    <a className="dropdown-item" href="#!">Another action</a>
-                                    <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#!">Something else here</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+            <Navbar
+                onToggle={setExpanded}
+                bg="light"
+                expand="lg"
+                sticky="top"
+                expanded={navExpanded}
+            >
+                <Container fluid>
+                    <button
+                        className="btn btn-secondary shadow-sm"
+                        id="sidebarToggle"
+                        onClick={toggleMenu}
+                    >
+                        <i className={`fas ${menuToggle ? 'fa-bars ' : 'fa-ellipsis-v'}`}></i>
+                    </button>
+                    {/*<Navbar.Brand*/}
+                    {/*    as={Link}*/}
+                    {/*    to="/"*/}
+                    {/*>*/}
+                    {/*    <Image*/}
+                    {/*        width="80px"*/}
+                    {/*        src={logo}*/}
+                    {/*    />*/}
+                    {/*</Navbar.Brand>*/}
+                    <Navbar.Toggle
+                        aria-controls="basic-navbar-nav"
+                    />
+                    <Navbar.Collapse
+                        id="basic-navbar-nav"
+                        className="justify-content-end"
+                    >
+                        <Nav className="me-auto">
+                            <Nav.Link onClick={closeNav} as={Link} to="/">Home</Nav.Link>
+                            <Nav.Link onClick={closeNav} as={Link} to="/login">Login</Nav.Link>
+                            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+                                <NavDropdown.Item onClick={closeNav} as={Link} to="/">Home</NavDropdown.Item>
+                                <NavDropdown.Item onClick={closeNav} as={Link} to="/login">Login</NavDropdown.Item>
+                                <NavDropdown.Item onClick={closeNav} href="#action/3.3">Something</NavDropdown.Item>
+                                <NavDropdown.Divider/>
+                                <NavDropdown.Item onClick={closeNav} href="#action/3.4">Separated
+                                    link</NavDropdown.Item>
+                            </NavDropdown>
+                        </Nav>
+                    </Navbar.Collapse>
+                    <Navbar.Collapse className="justify-content-end">
+                        <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+                            <NavDropdown.Item as={Link} to="/">Home</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                            <NavDropdown.Divider/>
+                            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                        </NavDropdown>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
         </>
     );
 };

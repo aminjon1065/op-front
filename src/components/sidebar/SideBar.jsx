@@ -1,25 +1,23 @@
 import React from 'react';
-import {Image} from "react-bootstrap";
+import {Image, ListGroup} from "react-bootstrap";
 import logo from "../../logo.svg";
+import {Link, useLocation} from "react-router-dom";
 
 const SideBar = () => {
+    const location = useLocation();
     return (
         <>
-            <div className="border-end sticky-top" id="sidebar-wrapper">
+            <div className="border-end bg-transparent sticky-top" id="sidebar-wrapper">
                 <div className="sticky-top">
-                    <div className="sidebar-heading border-bottom bg-light"><Image src={logo}/></div>
-                    <div className="list-group list-group-flush">
-                        <a className="list-group-item list-group-item-action list-group-item-light p-3"
-                           href="#!">Dashboard</a>
-                        <a className="list-group-item list-group-item-action list-group-item-light p-3"
-                           href="#!">Shortcuts</a>
-                        <a className="list-group-item list-group-item-action list-group-item-light p-3"
-                           href="#!">Overview</a>
-                        <a className="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>
-                        <a className="list-group-item list-group-item-action list-group-item-light p-3"
-                           href="#!">Profile</a>
-                        <a className="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a>
-                    </div>
+                    <div className="sidebar-heading border-bottom bg-transparent"><Image src={logo}/></div>
+                    <ListGroup variant="flush" activeKey={location.pathname}>
+                        <ListGroup.Item eventKey="/" as={Link} to="/" action variant="sidebar">
+                            Home
+                        </ListGroup.Item>
+                        <ListGroup.Item eventKey="/login" as={Link} to="/login" action variant="sidebar">
+                            Login
+                        </ListGroup.Item>
+                    </ListGroup>
                 </div>
             </div>
         </>
