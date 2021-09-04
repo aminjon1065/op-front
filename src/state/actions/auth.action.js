@@ -1,4 +1,4 @@
-import {LOGIN_SUCCESS, LOGOUT, REGISTER_SUCCESS} from "../../VARIABLE";
+import {LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT, REGISTER_SUCCESS} from "../../VARIABLE";
 
 const authActions = {
     login(data) {
@@ -6,6 +6,12 @@ const authActions = {
             type: LOGIN_SUCCESS,
             payload: data
         }
+    },
+
+    loginFail(){
+      return {
+          type:LOGIN_FAIL
+      }
     },
     logout() {
         return {

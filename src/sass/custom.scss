@@ -3,17 +3,44 @@ $theme-colors: (
         "secondary":$gray-300,
         "laravel":tomato,
         "teal":teal,
-        "milk":red,
         "sidebar":#1e282c
 );
+
+
 $sidebar: #1e282c;
+$lightning: $gray-100;
 $milk: #eeeeee;
 .bg-milk {
   background-color: $milk;
 }
 
+.bg-lightning {
+  background-color: $lightning;
+}
+
 .bg-sidebar {
   background-color: $sidebar;
 }
+
+.bg-login {
+  background-color: #0093E9;
+  background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+
+}
+
+.login-form {
+  width: 390px;
+  max-width: 100%;
+  border-radius: 10px;
+  height: 700px;
+  max-height: 75%;
+}
+
+.login-form h1 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+}
+
+
 
 @import "~bootstrap/scss/bootstrap";

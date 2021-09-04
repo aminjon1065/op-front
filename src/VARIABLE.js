@@ -1,4 +1,4 @@
-export const API_URL = "http://api.test/api/";
+export const API_URL = "http://op-back.test/api";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
