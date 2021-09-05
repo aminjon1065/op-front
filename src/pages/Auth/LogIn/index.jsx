@@ -19,12 +19,11 @@ const Login = () => {
     const passwordHandler = (event) => {
         setPassword(event.target.value)
     }
-
     const login = () => {
         LoginService.login(email, password).then((response) => {
             setToken(response.access_token)
             if (token) {
-                LoginService.authorization(token).then((response) => {
+                LoginService.authorization(response.access_token).then((response) => {
                     dispatch(authActions.login(response))
                 })
             }
