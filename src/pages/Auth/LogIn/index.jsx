@@ -59,7 +59,7 @@ const Login = () => {
                         </Container>
                         <Container>
                             <FloatingLabel
-                                controlId="floatingInput"
+                                controlId="floatingInputEmail"
                                 label="Email address"
                                 className="mb-3 shadow-sm rounded"
                             >
@@ -71,7 +71,7 @@ const Login = () => {
                                 />
                             </FloatingLabel>
                             <FloatingLabel
-                                controlId="floatingInput"
+                                controlId="floatingInputPassword"
                                 label="Password"
                                 className="mb-3 shadow-sm rounded"
                             >

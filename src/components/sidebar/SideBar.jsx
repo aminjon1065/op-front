@@ -16,7 +16,7 @@ const SideBar = () => {
                 <div className="sticky-top">
                     <div className="sidebar-heading">
                         <Image
-                            src={`${API_URL}/avatars/${selector.user.avatar}`}
+                            src={`${API_URL}/avatars/${selector.user.avatar``}` && logo}
                             width="200"
                         />
                     </div>

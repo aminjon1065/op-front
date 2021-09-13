@@ -1,32 +1,88 @@
-import React from 'react';
-import {Container} from "react-bootstrap";
+import React, {useState} from 'react';
+import {Container, FloatingLabel, Image, Form, Button} from "react-bootstrap";
+import logo from './../../../logo.svg'
 
 const Register = () => {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [avatar, setAvatar] = useState(null);
+    const [validated, setValidated] = useState(false);
+    const [validatePassword, setValidatePassword] = useState(false)
+
+    const handleNameChange = (event) => {
+        setName(event.target.value)
+    }
+    const handleNameEmail = (event) => {
+        setEmail(event.target.value)
+    }
+    const handleNamePassword = (event) => {
+        if (event.target.value.length === 8) {
+            setValidatePassword(true)
+        }
+        setPassword(event.target.value)
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const form = event.currentTarget;
+        const password = form.password.value
+        setValidated(true);
+        console.log(form.password)
+    };
     return (
         <>
-            <div className="vh-100 bg-login">
+            <div className="min-vh-100 bg-login">
                 <Container className="d-flex justify-content-center align-content-center">
                     <div className="shadow m-5 login-form p-3 bg-white">
-                        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium alias aut, deserunt
-                            dolorem enim excepturi facere illum iusto maxime minus necessitatibus numquam officia
-                            officiis provident quod repudiandae voluptates! Architecto, aspernatur!
+                        <div className="d-flex justify-content-center">
+                            <Image src={logo} width={200}/>
                         </div>
-                        <div>Aliquid aperiam doloremque, eligendi ipsa ipsum iste non similique voluptatibus? Beatae cum
-                            delectus dicta doloremque ducimus enim harum, in iusto minus, necessitatibus obcaecati optio
-                            placeat provident quas quasi qui voluptate?
+                        <div className="d-flex justify-content-center">
+                            <h2 className="align-items-center">Register</h2>
                         </div>
-                        <div>Ab alias assumenda delectus dolor laboriosam obcaecati sed totam. Animi asperiores atque
-                            cumque doloribus enim impedit in libero molestias, nesciunt nobis, non odio, pariatur saepe?
-                            Exercitationem fugit minima sequi sit.
-                        </div>
-                        <div>Ab amet asperiores consectetur consequatur culpa ducimus, eius eos error exercitationem
-                            facilis id labore, laborum molestias natus omnis possimus quisquam quo recusandae
-                            repellendus sequi, tenetur totam ullam velit voluptates voluptatibus?
-                        </div>
-                        <div>Deserunt, quia, reprehenderit. A ab ad atque blanditiis commodi corporis enim esse,
-                            explicabo id laboriosam magnam minima molestias non provident quaerat quam qui quod
-                            reprehenderit sit tempore temporibus vel voluptates!
-                        </div>
+                        <Form onSubmit={handleSubmit}>
+                            <FloatingLabel
+                                controlId="floatingInputName"
+                                label="Name"
+                                className="mb-3"
+                            >
+                                <Form.Control
+                                    type="text"
+                                    value={name}
+                                    required
+                                    name="name"
+                                    onChange={handleNameChange}
+                                />
+                            </FloatingLabel>
+                            <FloatingLabel
+                                controlId="floatingInputEmail"
+                                label="Email address"
+                                className="mb-3"
+                            >
+                                <Form.Control
+                                    value={email}
+                                    required
+                                    onChange={handleNameEmail}
+                                    type="email"
+                                />
+                            </FloatingLabel>
+                            <FloatingLabel
+                                controlId="floatingInputPassword"
+                                label="Password"
+                                className="mb-3"
+                            >
+                                <Form.Control
+                                    value={password}
+                                    name="password"
+                                    required
+                                    isInvalid={validatePassword}
+                                    onChange={handleNamePassword}
+                                    type="password"
+                                />
+                            </FloatingLabel>
+                            <Button type="submit" variant="teal">Register</Button>
+                        </Form>
                     </div>
                 </Container>
             </div>
