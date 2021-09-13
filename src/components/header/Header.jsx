@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import {Container, Image, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import logo from './../../logo.svg';
+import LogOutButton from "./logOut/logOutButton";
 
 const Header = () => {
     const [menuToggle, setMenuToggle] = useState(true);
@@ -75,6 +76,7 @@ const Header = () => {
                             <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                             <NavDropdown.Divider/>
                             <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                            <NavDropdown.Item><LogOutButton /></NavDropdown.Item>
                         </NavDropdown>
                     </Navbar.Collapse>
                 </Container>

@@ -21,3 +21,7 @@
     text-decoration: none;
 }
 
+.zIndex {
+    margin-top: -40%;
+    z-index: 999;
+}
