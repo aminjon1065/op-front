@@ -1,22 +1,34 @@
 import React from 'react';
-import {Formik, Form as Formes} from "formik";
+import {Formik, Form as Formes, FieldArray} from "formik";
 import * as yup from 'yup';
 import {Alert, Button, Container, Form, FloatingLabel, Image} from "react-bootstrap";
 import logo from "../../../logo.svg";
 
 
 const SignIn = () => {
-    const FILE_SIZE = 2000 * 2000;
-    const SUPPORTED_FORMATS = [
-        "image/jpg",
-        "image/jpeg",
-        "image/gif",
-        "image/png"
-    ];
-    const onChangeAvatar = (e, setFieldValue) => {
-        const avatar = e.target.files[0]
-        setFieldValue('avatar', e.target.files[0])
+
+    const getError = (touched, error, idx) => {
+        return touched && error && <p key={idx} className="text-danger">{error}</p>
     }
+    const gerArrErrorsMessages = (errors) => {
+        const result = [];
+        errors && Array.isArray(errors) && errors.forEach((val) => {
+            if (typeof val === "string") {
+                result.push(val)
+            } else {
+                Object.values(val).forEach((err) => {
+                    result.push(err)
+                })
+            }
+        })
+        return result
+    }
+
+    const getFileShema = (file) => file && ({
+        file: file,
+        type: file.type,
+        name: file.name
+    })
     const validationSchema = yup.object().shape({
         name: yup.string()
             .min(3, '3 is Short')
@@ -28,18 +40,21 @@ const SignIn = () => {
             .required('No password provided')
             .min(8, 'Password is too short - should be 8 chars minimum.')
             .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
-        avatar: yup.mixed()
-            .required("A file is required")
-        // .test(
-        //     "fileSize",
-        //     "File too large",
-        //     (values) => values && values.size <= FILE_SIZE
-        // )
-        // .test(
-        //     "fileFormat",
-        //     "Unsupported Format",
-        //     (values) => values && SUPPORTED_FORMATS.includes(values.type)
-        // )
+        avatar: yup.array().of(yup.object().shape({
+            file: yup.mixed().test("fileSize", "File is Long", (value) => {
+                if (!value) return false
+                return value.size < 1000000
+            }).required(),
+            type: yup.string().oneOf(
+                [
+                    "image/jpg",
+                    "image/jpeg",
+                    "image/gif",
+                    "image/png"
+                ], "Add Correct File Format")
+                .required(),
+            name: yup.string().required()
+        }).typeError("Add Avatar Image"))
     })
     return (
         <>
@@ -48,11 +63,12 @@ const SignIn = () => {
                     name: '',
                     email: '',
                     password: '',
-                    avatar: ''
+                    avatar: undefined
                 }}
                 validateOnBlur
                 onSubmit={values => {
                     console.log(values)
+                    console.log(values.avatar[0].file)
                 }}
                 validationSchema={validationSchema}
             >
@@ -98,7 +114,7 @@ const SignIn = () => {
 
                                     <Container>
                                         <FloatingLabel
-                                            controlId="floatingInputName"
+                                            controlId="floatingInputEmail"
                                             label="Email"
                                             className="mb-3"
                                         >
@@ -117,7 +133,7 @@ const SignIn = () => {
 
                                     <Container>
                                         <FloatingLabel
-                                            controlId="floatingInputName"
+                                            controlId="floatingInputPassword"
                                             label="Password"
                                             className="mb-3"
                                         >
@@ -134,16 +150,50 @@ const SignIn = () => {
                                         <Alert variant={"danger"}>{errors.password}</Alert>}
                                     </Container>
                                     <Container>
-                                        <Form.Group controlId="formFile" className="mb-3">
-                                            <Form.Label>Upload Avatar</Form.Label>
-                                            <Form.Control
-                                                type="file"
-                                                name={'avatar'}
-                                                onChange={handleChange(onChangeAvatar)}
-                                                onBlur={handleBlur}
-                                                accept="image/*"
-                                            />
-                                        </Form.Group>
+                                        {/*<Form.Group controlId="formFile" className="mb-3">*/}
+                                        {/*    <Form.Label>Upload Avatar</Form.Label>*/}
+                                        {/*    <Form.Control*/}
+                                        {/*        type="file"*/}
+                                        {/*        name={'avatar'}*/}
+                                        {/*        onChange={handleChange((event)=>{*/}
+                                        {/*            const {files} = event.target*/}
+                                        {/*            const file = files.item(0)*/}
+                                        {/*            if (!file) return*/}
+                                        {/*            if(Array.isArray(values.avatar)){} else {*/}
+                                        {/*                arrayHelper.push(file)*/}
+                                        {/*            }*/}
+                                        {/*        })}*/}
+                                        {/*        onBlur={handleBlur}*/}
+                                        {/*        accept="image/*"*/}
+                                        {/*    />*/}
+                                        {/*</Form.Group>*/}
+                                        {console.log("file", values.avatar)}
+                                        {console.log("size", errors.avatar)}
+                                        <FieldArray name={"avatar"}>
+                                            {(arrayHelper) => (
+                                                <>
+                                                    <p>
+                                                        <input
+                                                            type="file"
+                                                            name={"avatar"}
+                                                            onChange={(event) => {
+                                                                const {files} = event.target
+                                                                const file = getFileShema(files.item(0))
+                                                                if (!file) {
+                                                                    arrayHelper.remove(0)
+                                                                }
+                                                                if (Array.isArray(values.avatar)) {
+                                                                    arrayHelper.replace(0, file)
+                                                                } else {
+                                                                    arrayHelper.push(file)
+                                                                }
+                                                            }}
+                                                        />
+                                                    </p>
+                                                    {gerArrErrorsMessages(errors.avatar).map((err, idx) => getError(true, err, idx))}
+                                                </>
+                                            )}
+                                        </FieldArray>
                                         {touched.avatar && errors.avatar &&
                                         <Alert variant={"danger"}>{errors.avatar}</Alert>}
                                     </Container>
