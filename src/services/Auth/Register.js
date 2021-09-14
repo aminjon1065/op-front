@@ -1,26 +1,18 @@
 import axios from "axios";
 
-import {API_URL, REGISTER_SUCCESS} from "../../VARIABLE";
+import {API_URL} from "../../VARIABLE";
 
 class RegisterClass {
-    registerUser(name, email, password, avatar) {
-        let formData = new FormData();
-        formData.append("name", name);
-        formData.append("email", email);
-        formData.append("password", password);
-        formData.append("avatar", avatar.file);
+    registerUser(formData) {
         return axios({
-            method: "post",
-            baseURL: `${API_URL}/register`,
-            config: {headers: {'Content-Type': 'application/x-www-form-urlencoded'}},
-            data: {
-                name,
-                email,
-                password,
-                avatar
-            }
+            url: `${API_URL}/register`,
+            method: "POST",
+            header: {'Content-Type': 'multipart/form-data'},
+            data: formData
         }).then((res) => {
             return res
+        }).catch((err) => {
+            return err
         })
     }
 

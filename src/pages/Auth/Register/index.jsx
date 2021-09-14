@@ -4,10 +4,6 @@ import * as yup from 'yup';
 import {Alert, Button, Container, Form, FloatingLabel, Image} from "react-bootstrap";
 import logo from "../../../logo.svg";
 import RegisterClass from './../../../services/Auth/Register'
-import * as url from "url";
-import axios from "axios";
-import {API_URL} from "../../../VARIABLE";
-import Reg from "./Reg";
 
 const Register = () => {
     const [avatar, setAvatar] = useState(null);
@@ -27,7 +23,6 @@ const Register = () => {
         })
         return result
     }
-
     const getFileShema = (file) => file && ({
         file: file,
         type: file.type,
@@ -62,142 +57,148 @@ const Register = () => {
     })
     return (
         <>
-            {/*<Formik*/}
-            {/*    initialValues={{*/}
-            {/*        name: '',*/}
-            {/*        email: '',*/}
-            {/*        password: '',*/}
-            {/*        avatar: undefined*/}
-            {/*    }}*/}
-            {/*    validateOnBlur*/}
-            {/*    onSubmit={values => {*/}
-            {/*        RegisterClass.registerUser(values.name, values.email, values.password, avatar)*/}
-            {/*        console.log(avatar)*/}
-            {/*    }}*/}
-            {/*    validationSchema={validationSchema}*/}
-            {/*>*/}
-            {/*    {({*/}
-            {/*          values,*/}
-            {/*          errors,*/}
-            {/*          touched,*/}
-            {/*          handleChange,*/}
-            {/*          handleBlur,*/}
-            {/*          isValid,*/}
-            {/*          handleSubmit,*/}
-            {/*          dirty,*/}
-            {/*      }) => (*/}
-            {/*        <Formes>*/}
-            {/*            <div className="min-vh-100 bg-login">*/}
-            {/*                <Container className="d-flex justify-content-center align-content-center">*/}
-            {/*                    <div className="shadow m-5 login-form p-3 bg-white">*/}
-            {/*                        <div className="d-flex justify-content-center">*/}
-            {/*                            <Image src={logo} width={200}/>*/}
-            {/*                        </div>*/}
-            {/*                        <div className="d-flex justify-content-center">*/}
-            {/*                            <h2 className="align-items-center">Register</h2>*/}
-            {/*                        </div>*/}
-            {/*                        <Container>*/}
-            {/*                            <FloatingLabel*/}
-            {/*                                controlId="floatingInputName"*/}
-            {/*                                label="Name"*/}
-            {/*                                className="mb-3"*/}
-            {/*                            >*/}
-            {/*                                <Form.Control*/}
-            {/*                                    type="text"*/}
-            {/*                                    required*/}
-            {/*                                    name={'name'}*/}
-            {/*                                    onChange={handleChange}*/}
-            {/*                                    onBlur={handleBlur}*/}
-            {/*                                    value={values.name}*/}
-            {/*                                />*/}
-            {/*                            </FloatingLabel>*/}
-            {/*                            {touched.name && errors.name &&*/}
-            {/*                            <Alert variant={"danger"}>{errors.name}</Alert>*/}
-            {/*                            }*/}
-            {/*                        </Container>*/}
+            <Formik
+                initialValues={{
+                    name: '',
+                    email: '',
+                    password: '',
+                    avatar: undefined
+                }}
+                validateOnBlur
+                onSubmit={values => {
+                    let file = avatar
+                    let formData = new FormData();
+                    formData.append("avatar", file)
+                    formData.append("name", values.name)
+                    formData.append("email", values.email)
+                    formData.append("password", values.password)
+                    RegisterClass.registerUser(formData).then((res) => {
 
-            {/*                        <Container>*/}
-            {/*                            <FloatingLabel*/}
-            {/*                                controlId="floatingInputEmail"*/}
-            {/*                                label="Email"*/}
-            {/*                                className="mb-3"*/}
-            {/*                            >*/}
-            {/*                                <Form.Control*/}
-            {/*                                    type="email"*/}
-            {/*                                    required*/}
-            {/*                                    name={'email'}*/}
-            {/*                                    onChange={handleChange}*/}
-            {/*                                    onBlur={handleBlur}*/}
-            {/*                                    value={values.email}*/}
-            {/*                                />*/}
-            {/*                            </FloatingLabel>*/}
-            {/*                            {touched.email && errors.email &&*/}
-            {/*                            <Alert variant={"danger"}>{errors.email}</Alert>}*/}
-            {/*                        </Container>*/}
-            {/*                        <Container>*/}
-            {/*                            <FloatingLabel*/}
-            {/*                                controlId="floatingInputPassword"*/}
-            {/*                                label="Password"*/}
-            {/*                                className="mb-3"*/}
-            {/*                            >*/}
-            {/*                                <Form.Control*/}
-            {/*                                    type="password"*/}
-            {/*                                    required*/}
-            {/*                                    name={'password'}*/}
-            {/*                                    onChange={handleChange}*/}
-            {/*                                    onBlur={handleBlur}*/}
-            {/*                                    value={values.password}*/}
-            {/*                                />*/}
-            {/*                            </FloatingLabel>*/}
-            {/*                            {touched.password && errors.password &&*/}
-            {/*                            <Alert variant={"danger"}>{errors.password}</Alert>}*/}
-            {/*                        </Container>*/}
-            {/*                        <Container>*/}
-            {/*                            <FieldArray name={"avatar"}>*/}
-            {/*                                {(arrayHelper) => (*/}
-            {/*                                    <>*/}
-            {/*                                        <p>*/}
-            {/*                                            <input*/}
-            {/*                                                type="file"*/}
-            {/*                                                name={"avatar"}*/}
-            {/*                                                onChange={(event) => {*/}
-            {/*                                                    const {files} = event.target*/}
-            {/*                                                    setAvatar(files[0])*/}
-            {/*                                                    const file = getFileShema(files.item(0))*/}
-            {/*                                                    if (!file) {*/}
-            {/*                                                        arrayHelper.remove(0)*/}
-            {/*                                                    }*/}
-            {/*                                                    if (Array.isArray(values.avatar)) {*/}
-            {/*                                                        arrayHelper.replace(0, file)*/}
-            {/*                                                    } else {*/}
-            {/*                                                        arrayHelper.push(file)*/}
-            {/*                                                    }*/}
-            {/*                                                }}*/}
-            {/*                                            />*/}
-            {/*                                        </p>*/}
-            {/*                                        {gerArrErrorsMessages(errors.avatar).map((err, idx) => getError(true, err, idx))}*/}
-            {/*                                    </>*/}
-            {/*                                )}*/}
-            {/*                            </FieldArray>*/}
-            {/*                            {touched.avatar && errors.avatar &&*/}
-            {/*                            <Alert variant={"danger"}>{errors.avatar}</Alert>}*/}
-            {/*                        </Container>*/}
-            {/*                        <Button*/}
-            {/*                            variant="teal"*/}
-            {/*                            disabled={!isValid && !dirty}*/}
-            {/*                            onClick={handleSubmit}*/}
-            {/*                            className="float-end"*/}
-            {/*                            type="submit"*/}
-            {/*                        >*/}
-            {/*                            Submit*/}
-            {/*                        </Button>*/}
-            {/*                    </div>*/}
-            {/*                </Container>*/}
-            {/*            </div>*/}
-            {/*        </Formes>*/}
-            {/*    )}*/}
-            {/*</Formik>*/}
-            <Reg />
+                    })
+                }}
+                validationSchema={validationSchema}
+            >
+                {({
+                      values,
+                      errors,
+                      touched,
+                      handleChange,
+                      handleBlur,
+                      isValid,
+                      handleSubmit,
+                      dirty,
+                  }) => (
+                    <Formes>
+                        <div className="min-vh-100 bg-login">
+                            <Container className="d-flex justify-content-center align-content-center">
+                                <div className="shadow m-5 login-form p-3 bg-white">
+                                    <div className="d-flex justify-content-center">
+                                        <Image src={logo} width={200}/>
+                                    </div>
+                                    <div className="d-flex justify-content-center">
+                                        <h2 className="align-items-center">Register</h2>
+                                    </div>
+                                    <Container>
+                                        <FloatingLabel
+                                            controlId="floatingInputName"
+                                            label="Name"
+                                            className="mb-3"
+                                        >
+                                            <Form.Control
+                                                type="text"
+                                                required
+                                                name={'name'}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                value={values.name}
+                                            />
+                                        </FloatingLabel>
+                                        {touched.name && errors.name &&
+                                        <Alert variant={"danger"}>{errors.name}</Alert>
+                                        }
+                                    </Container>
+
+                                    <Container>
+                                        <FloatingLabel
+                                            controlId="floatingInputEmail"
+                                            label="Email"
+                                            className="mb-3"
+                                        >
+                                            <Form.Control
+                                                type="email"
+                                                required
+                                                name={'email'}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                value={values.email}
+                                            />
+                                        </FloatingLabel>
+                                        {touched.email && errors.email &&
+                                        <Alert variant={"danger"}>{errors.email}</Alert>}
+                                    </Container>
+                                    <Container>
+                                        <FloatingLabel
+                                            controlId="floatingInputPassword"
+                                            label="Password"
+                                            className="mb-3"
+                                        >
+                                            <Form.Control
+                                                type="password"
+                                                required
+                                                name={'password'}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                value={values.password}
+                                            />
+                                        </FloatingLabel>
+                                        {touched.password && errors.password &&
+                                        <Alert variant={"danger"}>{errors.password}</Alert>}
+                                    </Container>
+                                    <Container>
+                                        <FieldArray name={"avatar"}>
+                                            {(arrayHelper) => (
+                                                <>
+                                                    <p>
+                                                        <input
+                                                            type="file"
+                                                            name={"avatar"}
+                                                            onChange={(event) => {
+                                                                const files = event.target.files
+                                                                setAvatar(files[0])
+                                                                const file = getFileShema(files.item(0))
+                                                                if (!file) {
+                                                                    arrayHelper.remove(0)
+                                                                }
+                                                                if (Array.isArray(values.avatar)) {
+                                                                    arrayHelper.replace(0, file)
+                                                                } else {
+                                                                    arrayHelper.push(file)
+                                                                }
+                                                            }}
+                                                        />
+                                                    </p>
+                                                    {gerArrErrorsMessages(errors.avatar).map((err, idx) => getError(true, err, idx))}
+                                                </>
+                                            )}
+                                        </FieldArray>
+                                        {touched.avatar && errors.avatar &&
+                                        <Alert variant={"danger"}>{errors.avatar}</Alert>}
+                                    </Container>
+                                    <Button
+                                        variant="teal"
+                                        disabled={!isValid && !dirty}
+                                        onClick={handleSubmit}
+                                        className="float-end"
+                                        type="submit"
+                                    >
+                                        Submit
+                                    </Button>
+                                </div>
+                            </Container>
+                        </div>
+                    </Formes>
+                )}
+            </Formik>
         </>
     );
 };
