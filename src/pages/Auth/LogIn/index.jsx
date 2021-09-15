@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import authActions from "../../../state/actions/auth.action";
 import {Link, Redirect} from "react-router-dom";
 import {CSSTransition} from "react-transition-group";
+import Loading from "../../../components/loading/Loading";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -53,56 +54,66 @@ const Login = () => {
             <div className="min-vh-100 bg-login">
                 <Container className="d-flex justify-content-center align-content-center">
                     <div className="shadow m-5 login-form p-3 bg-white">
-                        <h1 className="text-center mt-5 mb-3">Sign In</h1>
-                        <Container className="d-flex justify-content-center">
-                            <Image src={logo} width="150"/>
-                        </Container>
-                        <Container>
-                            <FloatingLabel
-                                controlId="floatingInputEmail"
-                                label="Email address"
-                                className="mb-3 shadow-sm rounded"
-                            >
-                                <Form.Control
-                                    type="email"
-                                    value={email}
-                                    onChange={emailHandler}
-                                    placeholder="name@example.com"
-                                />
-                            </FloatingLabel>
-                            <FloatingLabel
-                                controlId="floatingInputPassword"
-                                label="Password"
-                                className="mb-3 shadow-sm rounded"
-                            >
-                                <Form.Control
-                                    type="password"
-                                    value={password}
-                                    onChange={passwordHandler}
-                                    placeholder="password"
-                                />
-                            </FloatingLabel>
-                        </Container>
-                        <div className="d-flex justify-content-center align-content-center">
-                            <Button
-                                variant="outline"
-                                size="lg"
-                                onClick={login}
-                                className={styles.btnGrad}
-                            >
-                                Test
-                            </Button>
-                        </div>
-                        <div className="d-flex justify-content-center align-content-center mt-5 pt-5">
-                            <p>
-                                or{" "}
-                                <strong>
-                                    <Link className="link-info" to="/register">
-                                        Register
-                                    </Link>
-                                </strong>
-                            </p>
-                        </div>
+                        {
+                            show
+                                ?
+                                <div className="h-100 d-flex justify-content-center  align-items-center">
+                                    <Loading/>
+                                </div>
+                                :
+                                <>
+                                    <h1 className="text-center mt-5 mb-3">Sign In</h1>
+                                    <Container className="d-flex justify-content-center">
+                                        <Image src={logo} width="150"/>
+                                    </Container>
+                                    <Container>
+                                        <FloatingLabel
+                                            controlId="floatingInputEmail"
+                                            label="Email address"
+                                            className="mb-3 shadow-sm rounded"
+                                        >
+                                            <Form.Control
+                                                type="email"
+                                                value={email}
+                                                onChange={emailHandler}
+                                                placeholder="name@example.com"
+                                            />
+                                        </FloatingLabel>
+                                        <FloatingLabel
+                                            controlId="floatingInputPassword"
+                                            label="Password"
+                                            className="mb-3 shadow-sm rounded"
+                                        >
+                                            <Form.Control
+                                                type="password"
+                                                value={password}
+                                                onChange={passwordHandler}
+                                                placeholder="password"
+                                            />
+                                        </FloatingLabel>
+                                    </Container>
+                                    <div className="d-flex justify-content-center align-content-center">
+                                        <Button
+                                            variant="outline"
+                                            size="lg"
+                                            onClick={login}
+                                            className={styles.btnGrad}
+                                        >
+                                            Test
+                                        </Button>
+                                    </div>
+                                    <div className="d-flex justify-content-center align-content-center mt-5 pt-5">
+                                        <p>
+                                            or{" "}
+                                            <strong>
+                                                <Link className="link-info" to="/register">
+                                                    Register
+                                                </Link>
+                                            </strong>
+                                        </p>
+                                    </div>
+                                </>
+                        }
                     </div>
                 </Container>
                 {
