@@ -73,7 +73,7 @@ const Register = () => {
                     formData.append("email", values.email)
                     formData.append("password", values.password)
                     RegisterClass.registerUser(formData).then((res) => {
-
+                        console.log(res)
                     })
                 }}
                 validationSchema={validationSchema}
@@ -164,7 +164,6 @@ const Register = () => {
                                                             name={"avatar"}
                                                             onChange={(event) => {
                                                                 const files = event.target.files
-                                                                setAvatar(files[0])
                                                                 const file = getFileShema(files.item(0))
                                                                 if (!file) {
                                                                     arrayHelper.remove(0)
@@ -174,6 +173,7 @@ const Register = () => {
                                                                 } else {
                                                                     arrayHelper.push(file)
                                                                 }
+                                                                setAvatar(files.item(0))
                                                             }}
                                                         />
                                                     </p>
@@ -184,9 +184,10 @@ const Register = () => {
                                         {touched.avatar && errors.avatar &&
                                         <Alert variant={"danger"}>{errors.avatar}</Alert>}
                                     </Container>
+                                    {console.log(isValid && dirty)}
                                     <Button
                                         variant="teal"
-                                        disabled={!isValid && !dirty}
+                                        disabled={!isValid && dirty}
                                         onClick={handleSubmit}
                                         className="float-end"
                                         type="submit"
