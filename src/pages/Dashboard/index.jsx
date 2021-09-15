@@ -3,11 +3,12 @@ import SideBar from "../../components/sidebar/SideBar";
 import Header from "../../components/header/Header";
 import {Container} from "react-bootstrap";
 import LoginService from './../../services/Auth/Login'
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import authActions from "../../state/actions/auth.action";
 
 const Dashboard = () => {
     const dispatch = useDispatch();
+    const selector = useSelector(state => state.auth)
     const token = localStorage.getItem('jwt') || null
     useEffect(() => {
         const auth = (token) => {
@@ -15,7 +16,9 @@ const Dashboard = () => {
                 dispatch(authActions.login(res))
             })
         }
-        if (token) {
+
+
+        if (token && !selector.isLoggedIn) {
             auth(token)
         }
     })

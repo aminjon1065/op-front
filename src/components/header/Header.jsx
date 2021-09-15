@@ -57,6 +57,7 @@ const Header = () => {
                     >
                         <Nav className="me-auto">
                             <Nav.Link onClick={closeNav} as={Link} to="/">Home</Nav.Link>
+                            <Nav.Link onClick={closeNav} as={Link} to="/register">Register</Nav.Link>
                             <Nav.Link onClick={closeNav} as={Link} to="/login">Login</Nav.Link>
                             <Nav.Link onClick={closeNav} as={Link} to="/login">Login</Nav.Link>
                             <NavDropdown title="Dropdown" id="basic-nav-dropdown">

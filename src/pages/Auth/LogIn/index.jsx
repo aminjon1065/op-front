@@ -13,6 +13,7 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [show, setShow] = useState(false);
+    const [loading, setLoading] = useState(false)
     const dispatch = useDispatch();
     const selector = useSelector((state) => state.auth.isLoggedIn);
     const emailHandler = (event) => {
@@ -22,6 +23,7 @@ const Login = () => {
         setPassword(event.target.value);
     };
     const login = () => {
+        setLoading(true)
         LoginService.login(email, password).then((response) => {
             if (response.access_token) {
                 LoginService.authorization(response.access_token).then((response) => {
@@ -30,6 +32,7 @@ const Login = () => {
             } else {
                 dispatch(authActions.loginFail())
                 setShow(true)
+                setLoading(false)
             }
         });
     };
@@ -55,7 +58,7 @@ const Login = () => {
                 <Container className="d-flex justify-content-center align-content-center">
                     <div className="shadow m-5 login-form p-3 bg-white">
                         {
-                            show
+                            loading
                                 ?
                                 <div className="h-100 d-flex justify-content-center  align-items-center">
                                     <Loading/>
