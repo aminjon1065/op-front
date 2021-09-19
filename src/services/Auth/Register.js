@@ -9,10 +9,6 @@ class RegisterClass {
             method: "POST",
             header: {'Content-Type': 'multipart/form-data'},
             data: formData
-        }).then((res) => {
-            return res
-        }).catch((err) => {
-            return err
         })
     }
 

@@ -8,10 +8,13 @@ import Loading from "../../../components/loading/Loading";
 import {useHistory} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import authActions from "../../../state/actions/auth.action";
+import styles from "../LogIn/styles.module.css";
+import {CSSTransition} from "react-transition-group";
 
 const Register = () => {
     const [avatar, setAvatar] = useState(null);
     const [loading, setLoading] = useState(false)
+    const [responseMessage, setResponseMessag] = useState('')
     const history = useHistory()
     const dispatch = useDispatch();
     const getError = (touched, error, idx) => {
@@ -30,6 +33,21 @@ const Register = () => {
         })
         return result
     }
+
+    const alert = (
+        <div className={`float-end col-2 position-absolute ${styles.zIndex}`}>
+            <CSSTransition
+                in={loading}
+                timeout={300}
+                classNames="alert"
+                unmountOnExit
+            >
+                <Alert variant="danger" onClick={() => setLoading(false)} show={loading} dismissible transition>
+                    {responseMessage}
+                </Alert>
+            </CSSTransition>
+        </div>
+    )
 
     const getFileShema = (file) => file && ({
         file: file,
@@ -67,6 +85,7 @@ const Register = () => {
             <div className="min-vh-100 bg-login">
                 <Container className="d-flex justify-content-center align-content-center">
                     <div className="shadow m-5 login-form p-3 bg-white">
+
                         {
                             loading
                                 ?
@@ -94,12 +113,17 @@ const Register = () => {
                                             formData.append("name", values.name)
                                             formData.append("email", values.email)
                                             formData.append("password", values.password)
-                                            RegisterClass.registerUser(formData).then((res) => {
-                                                if (res.status === 201) {
-                                                    dispatch(authActions.registerSuccess(res.data))
-                                                    return history.push('/login')
-                                                }
-                                            })
+                                            RegisterClass.registerUser(formData)
+                                                .then((res) => {
+                                                    if (res.status === 201) {
+                                                        dispatch(authActions.registerSuccess(res.data))
+                                                        return history.push('/login')
+                                                    }
+                                                    setLoading(false)
+                                                })
+                                                .catch((err) => {
+                                                    setResponseMessag(err.response.data)
+                                                })
                                         }}
                                         validationSchema={validationSchema}
                                     >
@@ -224,6 +248,7 @@ const Register = () => {
                         }
                     </div>
                 </Container>
+                {loading && alert}
             </div>
         </>
     );
