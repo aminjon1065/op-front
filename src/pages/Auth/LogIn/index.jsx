@@ -37,7 +37,7 @@ const Login = () => {
         });
     };
     const alert = (
-        <div className={`float-end col-2 position-absolute ${styles.zIndex}`}>
+        <div className={`float-end col-3 position-absolute ${styles.zIndex}`}>
             <CSSTransition
                 in={show}
                 timeout={300}
@@ -45,7 +45,7 @@ const Login = () => {
                 unmountOnExit
             >
                 <Alert variant="danger" onClick={() => setShow(false)} show={show} dismissible transition>
-                    Error LogIn
+                    Please input correct email or password
                 </Alert>
             </CSSTransition>
         </div>

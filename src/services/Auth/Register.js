@@ -1,5 +1,4 @@
 import axios from "axios";
-
 import {API_URL} from "../../VARIABLE";
 
 class RegisterClass {
@@ -11,7 +10,6 @@ class RegisterClass {
             data: formData
         })
     }
-
 }
 
 export default new RegisterClass();
