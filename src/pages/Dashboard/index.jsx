@@ -23,10 +23,11 @@ const Dashboard = () => {
         if (token && !selector.isLoggedIn) {
             auth(token)
         }
+
         if (!token) {
             history.push('/login')
         }
-    })
+    }, [history, dispatch, selector.isLoggedIn, token])
     return (
         <>
             <div className="bg-milk d-flex" id="wrapper">
