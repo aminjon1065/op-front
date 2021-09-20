@@ -45,7 +45,8 @@ const SideBar = () => {
                     <ListGroup variant="flush" activeKey={location.pathname}>
                         <Navbar bg="sidebar" variant="dark">
                             <Nav className="flex-column">
-                                <Nav.Link as={Link} eventKey="/" to="/"> Home <Badge pill bg="light"><i className="fas fa-home text-dark"></i></Badge></Nav.Link>
+                                <Nav.Link as={Link} eventKey="/" to="/"> Home <Badge pill bg="light"><i
+                                    className="fas fa-home text-dark"></i></Badge></Nav.Link>
                                 <Nav.Link as={Link} eventKey="/login" to="/login">Link</Nav.Link>
                                 <Nav.Link eventKey="link-2">Link</Nav.Link>
                             </Nav>

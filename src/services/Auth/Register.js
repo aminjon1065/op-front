@@ -1,5 +1,4 @@
 import axios from "axios";
-
 import {API_URL} from "../../VARIABLE";
 
 class RegisterClass {
@@ -9,13 +8,8 @@ class RegisterClass {
             method: "POST",
             header: {'Content-Type': 'multipart/form-data'},
             data: formData
-        }).then((res) => {
-            return res
-        }).catch((err) => {
-            return err
         })
     }
-
 }
 
 export default new RegisterClass();
